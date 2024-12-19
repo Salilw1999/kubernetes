@@ -1,0 +1,45 @@
+Kubernete setup file
+(Run on both master and worker nodes)
+
+1) update a linux system
+    sudo apt-get update –y
+
+2)install a docker in linux
+    sudo apt-get install docker.io –y
+
+3)for install google key because kubernetes is a google application and now it managed by CNCF(CLOUD NATIVE COMMITY)
+    sudo apt-get install apt-transport-https ca-certificates curl gnupg
+    sudo mkdir -p /etc/apt/keyrings
+    curl -fsSL https://pkgs.k8s.io/core:/stable:/v1.30/deb/Release.key | sudo gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    sudo chmod 644 /etc/apt/keyrings/kubernetes-apt-keyring.gpg
+    echo 'deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/v1.30/deb/ /' | sudo tee /etc/apt/sources.list.d/kubernetes.list
+
+4)kubernetes some kubernetes file get permission Permission (644=The owner can read and write, while the group and others can only read)
+    sudo chmod 644 /etc/apt/sources.list.d/kubernetes.list
+
+5)once again update linux setup and install kubeadm, kubectl and kubelet (kubernetes running command)
+    sudo apt-get update
+    sudo apt-get install -y kubectl kubeadm kubelet
+ 
+On Master
+
+1)generate a master node token key for communication with worker node setup 
+    sudo kubeadm init --ignore-preflight-errors=all
+    mkdir -p $HOME/.kube
+    sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+    sudo chown $(id -u):$(id -g) $HOME/.kube/config
+    kubectl apply -f https://raw.githubusercontent.com/projectcalico/calico/v3.26.0/manifests/calico.yaml
+    kubeadm token create --print-join-command
+ 
+[add port 6443 in both master and worker node]
+ 
+On Worker:
+Use kubeadm join command with token (copy the command from master and paste on worker)
+ 
+On Master:
+1)for checking nodes
+    kubectl get nodes
+ 
+given in last after processing done
+kubeadm join 172.31.19.6:6443 --token bak5cj.ezllaqgelzdv3lyh \ --discovery-token-ca-cert-hash sha256:c0183f00b45a9d16c1f27893696c8f7dad3ca47567ad4a770257fb425662303a
+
