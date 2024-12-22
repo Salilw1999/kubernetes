@@ -1,13 +1,12 @@
 apiVersion: v1
-kind: service
+kind: Service
 metadata:
-  name: mynodeportservice
+    name: mynodeportservice
 spec:
-  type: nodedPort
+  type: NodePort
   selector:
     app: myapp
-ports:
- - protocol: TCP
+  ports:
+    - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 30001
