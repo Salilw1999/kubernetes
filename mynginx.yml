@@ -1,22 +1,22 @@
-#define port type and name
 apiVersion: v1
 kind: ReplicationController
 metadata:
   name: myrc
-#select labels and count 
 spec:
   replicas: 3
   selector:
     env: dev
-  #defined label    
   template:
-      metadata:
-        labels:
-            env: dev
-      spec: 
-      #define container 
-           containers:
-              - name: nginxcontainer
-                image: nginx
-                ports:
-                  - containerPort: 80 
+    metadata:
+      labels:
+        env: dev
+    spec:
+      containers:
+        - name: nginxcontainer
+          image: nginx
+          ports:
+            - containerPort: 80
+
+
+
+
