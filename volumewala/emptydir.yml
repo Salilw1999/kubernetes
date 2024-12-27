@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-deployment # Added a name for the deployment
+  labels: 
+    app: env # Added labels for the deployment
+spec:
+  replicas: 3 # Fixed capitalization
+  selector: 
+    matchLabels:
+      app: env # Ensures Pods are matched by the Deployment
+  template:
+    metadata: # Added metadata for template
+      labels:
+        app: env # Ensures labels match the selector
+    spec: # Correctly defined spec for Pod
+      containers:
+        - name: nginx
+          image: nginx
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: myvol
+        - name: php
+          image: php
+          ports:
+            - containerPort: 90
+          volumeMounts:
+            - mountPath: "/usr/share/nginx/html"
+              name: myvol
+      volumes:
+        - name: myvol
+          emptyDir: {}

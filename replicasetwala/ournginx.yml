@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: myrs2
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: fb
+  template:
+    metadata:
+      labels:
+        app: fb
+    spec:
+      containers:
+        - name: nginxcontainer
+          image: nginx
+          ports:
+            - containerPort: 80

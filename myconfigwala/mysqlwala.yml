@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mysqlwala
+spec:
+  containers:
+    - name: mysqlwalacontainer
+      image: mysql:8.0
+      env:
+        - name: MYSQL_ROOT_PASSWORD
+          valueFrom:
+              configMapKeyRef:
+                name: mysql-config
+                key: mysql-password

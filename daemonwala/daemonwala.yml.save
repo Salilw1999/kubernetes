@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+    name: daeomonwala
+    labels:
+      app: promi
+spec:
+   selector:
+      ma
