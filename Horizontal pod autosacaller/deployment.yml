@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apcahe-deployment
+spec:
+  replicas: 3
+  selector: 
+    matchLabels:
+      app: app
+  metadata:
+    labels:
+      app: app
+  spec:
+    containers:
+      - name: apache-containers
+        image: httpd
+        ports:
+         - containerPort: 80
+        resources:
+          limits:
+            cpu: 200m
+            memory: 256Mi
+          requests:
+            cpu: 100m
+            memory: 128mi
