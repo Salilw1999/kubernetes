@@ -92,4 +92,4 @@ Save this file as `config.yml`.
 
 Create a cluster using the configuration file:
 ```bash
-kubectl create cluster --name my-cluster --config=config.yml
+kind create cluster --name my-cluster --config=config.yml
